@@ -14,7 +14,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
-                sh './jenkins/scripts/deliver.sh'
+                sh './mall-statistics-web/jenkins/scripts/deliver.sh'
             }
         }
     }
