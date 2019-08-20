@@ -1,0 +1,21 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build') {
+            steps {
+                sh '/usr/local/apache-maven-3.6.1/bin/mvn -B -DskipTests clean package'
+            }
+        }
+        stage('Test') {
+            steps {
+                echo 'skip test...'
+            }
+        }
+        stage('Deploy') {
+            steps {
+                sh './jenkins/scripts/deliver.sh'
+            }
+        }
+    }
+}

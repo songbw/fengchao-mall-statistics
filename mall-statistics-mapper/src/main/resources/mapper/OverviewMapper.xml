@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengchao.statistics.mapper.OverviewMapper" >
+  <resultMap id="BaseResultMap" type="com.fengchao.statistics.model.Overview" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="order_payment_amount" property="orderPaymentAmount" jdbcType="REAL" />
+    <result column="order_count" property="orderCount" jdbcType="INTEGER" />
+    <result column="order_people_num" property="orderPeopleNum" jdbcType="INTEGER" />
+    <result column="order_back_num" property="orderBackNum" jdbcType="INTEGER" />
+    <result column="statistics_date" property="statisticsDate" jdbcType="DATE" />
+    <result column="created_at" property="createdAt" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_payment_amount, order_count, order_people_num, order_back_num, statistics_date, 
+    created_at
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from overview
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+    <select id="selectSum" resultType="com.fengchao.statistics.model.Overview">
+      select sum(order_payment_amount) orderPaymentAmount, sum(order_count) orderCount, sum(order_people_num) orderPeopleNum, sum(order_back_num) orderBackNum
+      from overview
+    </select>
+    <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from overview
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.fengchao.statistics.model.Overview" >
+    insert into overview (id, order_payment_amount, order_count, 
+      order_people_num, order_back_num, statistics_date, 
+      created_at)
+    values (#{id,jdbcType=BIGINT}, #{orderPaymentAmount,jdbcType=REAL}, #{orderCount,jdbcType=INTEGER},
+      #{orderPeopleNum,jdbcType=INTEGER}, #{orderBackNum,jdbcType=INTEGER}, #{statisticsDate,jdbcType=DATE}, 
+      #{createdAt,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fengchao.statistics.model.Overview" >
+    insert into overview
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderPaymentAmount != null" >
+        order_payment_amount,
+      </if>
+      <if test="orderCount != null" >
+        order_count,
+      </if>
+      <if test="orderPeopleNum != null" >
+        order_people_num,
+      </if>
+      <if test="orderBackNum != null" >
+        order_back_num,
+      </if>
+      <if test="statisticsDate != null" >
+        statistics_date,
+      </if>
+      <if test="createdAt != null" >
+        created_at,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="orderPaymentAmount != null" >
+        #{orderPaymentAmount,jdbcType=REAL},
+      </if>
+      <if test="orderCount != null" >
+        #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderPeopleNum != null" >
+        #{orderPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderBackNum != null" >
+        #{orderBackNum,jdbcType=INTEGER},
+      </if>
+      <if test="statisticsDate != null" >
+        #{statisticsDate,jdbcType=DATE},
+      </if>
+      <if test="createdAt != null" >
+        #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fengchao.statistics.model.Overview" >
+    update overview
+    <set >
+      <if test="orderPaymentAmount != null" >
+        order_payment_amount = #{orderPaymentAmount,jdbcType=REAL},
+      </if>
+      <if test="orderCount != null" >
+        order_count = #{orderCount,jdbcType=INTEGER},
+      </if>
+      <if test="orderPeopleNum != null" >
+        order_people_num = #{orderPeopleNum,jdbcType=INTEGER},
+      </if>
+      <if test="orderBackNum != null" >
+        order_back_num = #{orderBackNum,jdbcType=INTEGER},
+      </if>
+      <if test="statisticsDate != null" >
+        statistics_date = #{statisticsDate,jdbcType=DATE},
+      </if>
+      <if test="createdAt != null" >
+        created_at = #{createdAt,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fengchao.statistics.model.Overview" >
+    update overview
+    set order_payment_amount = #{orderPaymentAmount,jdbcType=REAL},
+      order_count = #{orderCount,jdbcType=INTEGER},
+      order_people_num = #{orderPeopleNum,jdbcType=INTEGER},
+      order_back_num = #{orderBackNum,jdbcType=INTEGER},
+      statistics_date = #{statisticsDate,jdbcType=DATE},
+      created_at = #{createdAt,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

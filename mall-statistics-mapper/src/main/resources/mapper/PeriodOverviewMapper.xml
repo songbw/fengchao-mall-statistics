@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fengchao.statistics.mapper.PeriodOverviewMapper">
+  <resultMap id="BaseResultMap" type="com.fengchao.statistics.model.PeriodOverview">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="late_at_night" jdbcType="BIGINT" property="lateAtNight" />
+    <result column="early_morning" jdbcType="BIGINT" property="earlyMorning" />
+    <result column="morning" jdbcType="BIGINT" property="morning" />
+    <result column="noon" jdbcType="BIGINT" property="noon" />
+    <result column="afternoon" jdbcType="BIGINT" property="afternoon" />
+    <result column="night" jdbcType="BIGINT" property="night" />
+    <result column="statistics_date" jdbcType="DATE" property="statisticsDate" />
+    <result column="statistic_start_time" jdbcType="TIMESTAMP" property="statisticStartTime" />
+    <result column="statistic_end_time" jdbcType="TIMESTAMP" property="statisticEndTime" />
+    <result column="period_type" jdbcType="SMALLINT" property="periodType" />
+    <result column="istatus" jdbcType="SMALLINT" property="istatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, late_at_night, early_morning, morning, noon, afternoon, night, statistics_date, 
+    statistic_start_time, statistic_end_time, period_type, istatus, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.fengchao.statistics.model.PeriodOverviewExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from period_overview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from period_overview
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from period_overview
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.fengchao.statistics.model.PeriodOverviewExample">
+    delete from period_overview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" keyColumn="id" keyProperty="id" parameterType="com.fengchao.statistics.model.PeriodOverview" useGeneratedKeys="true">
+    insert into period_overview (late_at_night, early_morning, morning, 
+      noon, afternoon, night, 
+      statistics_date, statistic_start_time, statistic_end_time, 
+      period_type, istatus, create_time, 
+      update_time)
+    values (#{lateAtNight,jdbcType=BIGINT}, #{earlyMorning,jdbcType=BIGINT}, #{morning,jdbcType=BIGINT}, 
+      #{noon,jdbcType=BIGINT}, #{afternoon,jdbcType=BIGINT}, #{night,jdbcType=BIGINT}, 
+      #{statisticsDate,jdbcType=DATE}, #{statisticStartTime,jdbcType=TIMESTAMP}, #{statisticEndTime,jdbcType=TIMESTAMP}, 
+      #{periodType,jdbcType=SMALLINT}, #{istatus,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fengchao.statistics.model.PeriodOverview" useGeneratedKeys="true">
+    insert into period_overview
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="lateAtNight != null">
+        late_at_night,
+      </if>
+      <if test="earlyMorning != null">
+        early_morning,
+      </if>
+      <if test="morning != null">
+        morning,
+      </if>
+      <if test="noon != null">
+        noon,
+      </if>
+      <if test="afternoon != null">
+        afternoon,
+      </if>
+      <if test="night != null">
+        night,
+      </if>
+      <if test="statisticsDate != null">
+        statistics_date,
+      </if>
+      <if test="statisticStartTime != null">
+        statistic_start_time,
+      </if>
+      <if test="statisticEndTime != null">
+        statistic_end_time,
+      </if>
+      <if test="periodType != null">
+        period_type,
+      </if>
+      <if test="istatus != null">
+        istatus,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="lateAtNight != null">
+        #{lateAtNight,jdbcType=BIGINT},
+      </if>
+      <if test="earlyMorning != null">
+        #{earlyMorning,jdbcType=BIGINT},
+      </if>
+      <if test="morning != null">
+        #{morning,jdbcType=BIGINT},
+      </if>
+      <if test="noon != null">
+        #{noon,jdbcType=BIGINT},
+      </if>
+      <if test="afternoon != null">
+        #{afternoon,jdbcType=BIGINT},
+      </if>
+      <if test="night != null">
+        #{night,jdbcType=BIGINT},
+      </if>
+      <if test="statisticsDate != null">
+        #{statisticsDate,jdbcType=DATE},
+      </if>
+      <if test="statisticStartTime != null">
+        #{statisticStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statisticEndTime != null">
+        #{statisticEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="periodType != null">
+        #{periodType,jdbcType=SMALLINT},
+      </if>
+      <if test="istatus != null">
+        #{istatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.fengchao.statistics.model.PeriodOverviewExample" resultType="java.lang.Long">
+    select count(*) from period_overview
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update period_overview
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=BIGINT},
+      </if>
+      <if test="record.lateAtNight != null">
+        late_at_night = #{record.lateAtNight,jdbcType=BIGINT},
+      </if>
+      <if test="record.earlyMorning != null">
+        early_morning = #{record.earlyMorning,jdbcType=BIGINT},
+      </if>
+      <if test="record.morning != null">
+        morning = #{record.morning,jdbcType=BIGINT},
+      </if>
+      <if test="record.noon != null">
+        noon = #{record.noon,jdbcType=BIGINT},
+      </if>
+      <if test="record.afternoon != null">
+        afternoon = #{record.afternoon,jdbcType=BIGINT},
+      </if>
+      <if test="record.night != null">
+        night = #{record.night,jdbcType=BIGINT},
+      </if>
+      <if test="record.statisticsDate != null">
+        statistics_date = #{record.statisticsDate,jdbcType=DATE},
+      </if>
+      <if test="record.statisticStartTime != null">
+        statistic_start_time = #{record.statisticStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.statisticEndTime != null">
+        statistic_end_time = #{record.statisticEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.periodType != null">
+        period_type = #{record.periodType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.istatus != null">
+        istatus = #{record.istatus,jdbcType=SMALLINT},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update period_overview
+    set id = #{record.id,jdbcType=BIGINT},
+      late_at_night = #{record.lateAtNight,jdbcType=BIGINT},
+      early_morning = #{record.earlyMorning,jdbcType=BIGINT},
+      morning = #{record.morning,jdbcType=BIGINT},
+      noon = #{record.noon,jdbcType=BIGINT},
+      afternoon = #{record.afternoon,jdbcType=BIGINT},
+      night = #{record.night,jdbcType=BIGINT},
+      statistics_date = #{record.statisticsDate,jdbcType=DATE},
+      statistic_start_time = #{record.statisticStartTime,jdbcType=TIMESTAMP},
+      statistic_end_time = #{record.statisticEndTime,jdbcType=TIMESTAMP},
+      period_type = #{record.periodType,jdbcType=SMALLINT},
+      istatus = #{record.istatus,jdbcType=SMALLINT},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fengchao.statistics.model.PeriodOverview">
+    update period_overview
+    <set>
+      <if test="lateAtNight != null">
+        late_at_night = #{lateAtNight,jdbcType=BIGINT},
+      </if>
+      <if test="earlyMorning != null">
+        early_morning = #{earlyMorning,jdbcType=BIGINT},
+      </if>
+      <if test="morning != null">
+        morning = #{morning,jdbcType=BIGINT},
+      </if>
+      <if test="noon != null">
+        noon = #{noon,jdbcType=BIGINT},
+      </if>
+      <if test="afternoon != null">
+        afternoon = #{afternoon,jdbcType=BIGINT},
+      </if>
+      <if test="night != null">
+        night = #{night,jdbcType=BIGINT},
+      </if>
+      <if test="statisticsDate != null">
+        statistics_date = #{statisticsDate,jdbcType=DATE},
+      </if>
+      <if test="statisticStartTime != null">
+        statistic_start_time = #{statisticStartTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="statisticEndTime != null">
+        statistic_end_time = #{statisticEndTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="periodType != null">
+        period_type = #{periodType,jdbcType=SMALLINT},
+      </if>
+      <if test="istatus != null">
+        istatus = #{istatus,jdbcType=SMALLINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fengchao.statistics.model.PeriodOverview">
+    update period_overview
+    set late_at_night = #{lateAtNight,jdbcType=BIGINT},
+      early_morning = #{earlyMorning,jdbcType=BIGINT},
+      morning = #{morning,jdbcType=BIGINT},
+      noon = #{noon,jdbcType=BIGINT},
+      afternoon = #{afternoon,jdbcType=BIGINT},
+      night = #{night,jdbcType=BIGINT},
+      statistics_date = #{statisticsDate,jdbcType=DATE},
+      statistic_start_time = #{statisticStartTime,jdbcType=TIMESTAMP},
+      statistic_end_time = #{statisticEndTime,jdbcType=TIMESTAMP},
+      period_type = #{periodType,jdbcType=SMALLINT},
+      istatus = #{istatus,jdbcType=SMALLINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
