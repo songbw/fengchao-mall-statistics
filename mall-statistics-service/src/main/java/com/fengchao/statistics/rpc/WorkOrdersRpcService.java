@@ -37,9 +37,9 @@ public class WorkOrdersRpcService {
         int refundOrdersCount = 0;
 
         // 执行rpc调用
-        log.info("查询退货人数 调用workorders rpc服务 入参:无");
+        log.info("查询退货单数 调用workorders rpc服务 入参:无");
         OperaResponse operaResponse = workOrdersServiceClient.refundOrdersCount();
-        log.info("查询退货人数 调用workorders rpc服务 返回:{}", JSONUtil.toJsonString(operaResponse));
+        log.info("查询退货单数 调用workorders rpc服务 返回:{}", JSONUtil.toJsonString(operaResponse));
 
         // 处理返回
         if (operaResponse.getCode() == 200) {
