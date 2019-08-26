@@ -61,6 +61,12 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
                         orderDetailBean.getPaymentAt() == null ? new Date() : orderDetailBean.getPaymentAt(), DateUtil.TIME_HH_mm_ss);
 
                 TimeRangeEnum timeRangeEnum = TimeRangeEnum.checkInRange(orderCreateTime, DateUtil.TIME_HH_mm_ss);
+                if (timeRangeEnum == null) { // 时间有问题，报警
+                    log.warn("按照时间段period(天)维度统计订单详情总金额数据; 时间段格式化异常!! 时间orderCreateTime:{} 格式化结果为null", orderCreateTime);
+                    Cat.logEvent(StatisticConstants.DAILY_STATISTIC_EXCEPTION_TYPE, StatisticConstants.PERIOD_TIME_SEGMENT,
+                            Event.SUCCESS, "traceId=" + MDC.get("X-B3-TraceId"));
+                    continue;
+                }
                 switch (timeRangeEnum) {
                     case EARLYMORNINGRANGE:  // 凌晨
                         periodOverview.setEarlyMorning(periodOverview.getEarlyMorning() + saleAmount);

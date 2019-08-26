@@ -42,6 +42,11 @@ public class StatisticConstants {
     public static final String PERIOD = "period";
 
     /**
+     * 按照时间段统计任务-时间段格式化异常监控
+     */
+    public static final String PERIOD_TIME_SEGMENT = "period_time_segment";
+
+    /**
      * 商户维度，订单支付趋势统计任务
      */
     public static final String M_ORDERAMOUNT_TREND = "m_orderamount_trend";
