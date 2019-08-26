@@ -5,14 +5,9 @@ import lombok.Setter;
 
 import java.util.Date;
 
-/**
- * @Author tom
- * @Date 19-8-6 上午10:28
- */
 @Setter
 @Getter
 public class WorkOrder {
-
     private Long id;
 
     private Long merchantId;
@@ -35,7 +30,9 @@ public class WorkOrder {
 
     private String guanaitongTradeNo;
 
-    private String appid;
+    private String iAppId;
+
+    private String tAppId;
 
     private String title;
 
@@ -49,19 +46,11 @@ public class WorkOrder {
 
     private Integer typeId;
 
-    private String outcome;
-
-    private Date finishTime;
-
-    private Integer urgentDegree;
-
     private Integer status;
 
     private Date createTime;
 
     private Date updateTime;
 
-    private String createdBy;
 
-    private String updatedBy;
 }

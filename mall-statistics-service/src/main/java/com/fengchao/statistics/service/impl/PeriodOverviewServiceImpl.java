@@ -83,7 +83,10 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
                     case NIGHT: // 晚上
                         periodOverview.setNight(periodOverview.getNight() + saleAmount);
                         break;
-                    case LATEATNIGHT: // 深夜
+                    case LATEATNIGHT_A: // 深夜
+                        periodOverview.setLateAtNight(periodOverview.getLateAtNight() + saleAmount);
+                        break;
+                    case LATEATNIGHT_B: // 深夜
                         periodOverview.setLateAtNight(periodOverview.getLateAtNight() + saleAmount);
                         break;
                 }
@@ -182,7 +185,8 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
         NOON("10:00:00", "13:59:59"), // 中午
         AFTERNOON("14:00:00", "17:59:59"), // 下午
         NIGHT("18:00:00", "21:59:59"), // 晚上
-        LATEATNIGHT("22:00:00", "01:59:59"); // 深夜
+        LATEATNIGHT_A("22:00:00", "23:59:59"), // 深夜
+        LATEATNIGHT_B("00:00:00", "01:59:59"); // 深夜
 
         LocalTime startTime;
 
@@ -217,9 +221,12 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
             } else if (point.compareTo(NIGHT.getStartTime()) >= 0 &&
                     point.compareTo(NIGHT.getEndTime()) <= 0) {
                 return NIGHT;
-            } else if (point.compareTo(LATEATNIGHT.getStartTime()) >= 0 &&
-                    point.compareTo(LATEATNIGHT.getEndTime()) <= 0) {
-                return LATEATNIGHT;
+            } else if (point.compareTo(LATEATNIGHT_A.getStartTime()) >= 0 &&
+                    point.compareTo(LATEATNIGHT_A.getEndTime()) <= 0) {
+                return LATEATNIGHT_A;
+            } else if (point.compareTo(LATEATNIGHT_B.getStartTime()) >= 0 &&
+                    point.compareTo(LATEATNIGHT_B.getEndTime()) <= 0) {
+                return LATEATNIGHT_B;
             } else {
                 return null;
             }
@@ -234,5 +241,8 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
         }
     }
 
+    public static void main(String args[]) {
+        System.out.println(TimeRangeEnum.checkInRange("22:09:15", DateUtil.TIME_HH_mm_ss));
+    }
 
 }

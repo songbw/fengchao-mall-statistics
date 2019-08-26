@@ -2,10 +2,13 @@ package com.fengchao.statistics.feign;
 
 import com.fengchao.statistics.bean.OperaResponse;
 import com.fengchao.statistics.feign.hystric.WorkOrderServiceClientFallbackFactory;
+import com.fengchao.statistics.rpc.extmodel.WorkOrder;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.List;
 
 @FeignClient(value = "workorders", fallbackFactory = WorkOrderServiceClientFallbackFactory.class)
 public interface WorkOrdersServiceClient {
@@ -26,8 +29,8 @@ public interface WorkOrdersServiceClient {
      * @return
      */
     @RequestMapping(value = "/work_orders/refunds/list", method = RequestMethod.GET)
-    OperaResponse queryRefundInfoList(@RequestParam("timeStart") String startDateTime,
-                                      @RequestParam("timeEnd") String endDateTime);
+    OperaResponse<List<WorkOrder>> queryRefundInfoList(@RequestParam("timeStart") String startDateTime,
+                                                       @RequestParam("timeEnd") String endDateTime);
 
     /**
      * 根据商户id查询退货人数
