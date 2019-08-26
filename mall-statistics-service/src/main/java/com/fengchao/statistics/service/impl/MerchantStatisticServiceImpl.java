@@ -173,11 +173,6 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
         log.info("按照商户-城市(天)维度统计订单详情总金额数据; 统计时间范围: {} - {}, 开始...", startDateTime, endDateTime);
 
         try {
-            if (CollectionUtils.isEmpty(orderDetailBeanList)) {
-                log.info("按照商户-城市(天)维度统计订单详情总金额数据; 统计时间范围: {} - {} 统计数据为空 执行完成!");
-                return;
-            }
-
             // 1. 根据商户id维度将订单详情分类
             Map<Integer, List<OrderDetailBean>> orderDetailBeansByMerchantMap = divideOrderDetailByMerchantId(orderDetailBeanList);
             log.info("按照商户-城市(天)维度统计订单详情总金额数据; 统计时间范围：{} - {}, 根据商户id维度将订单详情分组结果:{}",
@@ -274,11 +269,6 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
         log.info("按照商户维度统计用户数相关数据; 统计时间范围：{} - {}, 开始...", startDateTime, endDateTime);
 
         try {
-            if (CollectionUtils.isEmpty(payedOrderDetailBeanList)) {
-                log.info("按照商户维度统计用户数相关数据; 统计时间范围: {} - {} 统计数据为空 执行完成!");
-                return;
-            }
-
             // 1. 根据商户id维度将订单详情分类
             Map<Integer, List<OrderDetailBean>> orderDetailBeansByMerchantMap = divideOrderDetailByMerchantId(payedOrderDetailBeanList);
             log.info("按照商户维度统计用户数相关数据; 统计时间范围：{} - {}, 根据商户id维度将订单详情分组结果:{}",
@@ -340,8 +330,7 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
                 mStatisticUserList.add(mStatisticUser);
             }
 
-            log.info("按照商户维度统计用户数相关数据; 统计时间范围：{} - {} 统计结果:{}",
-                    startDateTime, endDateTime, JSONUtil.toJsonString(mStatisticUserList));
+            log.info("按照商户维度统计用户数相关数据; 统计时间范围：{} - {} 统计结果:{}", startDateTime, endDateTime, JSONUtil.toJsonString(mStatisticUserList));
 
             // 5. 插入统计数据
             // 5.1 首先按照“统计时间”和“统计类型”从数据库获取是否有已统计过的数据; 如果有，则删除

@@ -116,12 +116,12 @@ public class OrderStatisticsRunner implements  JobRunner {
 
             // 3.2.2 商户相关统计
             // e.商户维度，订单支付趋势统计任务 m_city_orderamount
-            if (needExecuteTaskList.contains(StatisticConstants.M_ORDERAMOUNT_TREND)) {
+            if (needExecuteTaskList.contains(StatisticConstants.M_ORDERAMOUNT_TREND) && CollectionUtils.isNotEmpty(payedOrderDetailBeanList)) {
                 merchantStatisticService.statisticDailyOrderAmountByCity(payedOrderDetailBeanList, startDateTime, endDateTime, statisticDate);
             }
 
             // f.商户维度，用户数趋势
-            if (needExecuteTaskList.contains(StatisticConstants.M_USER_TREND)) {
+            if (needExecuteTaskList.contains(StatisticConstants.M_USER_TREND) && CollectionUtils.isNotEmpty(payedOrderDetailBeanList)) {
                 merchantStatisticService.statisticDailyUserCount(payedOrderDetailBeanList, startDateTime, endDateTime, statisticDate);
             }
 
