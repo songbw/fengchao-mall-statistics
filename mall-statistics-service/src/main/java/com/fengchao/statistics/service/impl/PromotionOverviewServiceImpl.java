@@ -95,6 +95,10 @@ public class PromotionOverviewServiceImpl implements PromotionOverviewService {
                 Long orderAmout = 0L; // 统计订单金额
                 for (OrderDetailBean orderDetailBean : _orderDetailBeanList) {
                     Float _tmpPrice = (orderDetailBean.getSaleAmount() == null ? 0L : orderDetailBean.getSaleAmount());
+                    if (orderDetailBean.getNum() == null) {
+                        log.warn("按照活动promotion(天)维度统计订单详情总数量数据; 数量为空，子订单号:{}",
+                                orderDetailBean.getSubOrderId());
+                    }
                     _tmpPrice = _tmpPrice * orderDetailBean.getNum();
 
                     orderAmout = orderAmout + new BigDecimal(_tmpPrice).multiply(new BigDecimal(100)).longValue();
