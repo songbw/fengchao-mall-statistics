@@ -121,7 +121,8 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
                     // 订单支付总额
                     Float saleAmount = _orderDetailBean.getSaleAmount();
                     if (saleAmount != null) {
-                        orderAmountB = orderAmountB.add(new BigDecimal(saleAmount));
+                        BigDecimal _count = new BigDecimal(_orderDetailBean.getNum());
+                        orderAmountB = orderAmountB.add(new BigDecimal(saleAmount).multiply(_count));
                     }
                 }
 
@@ -215,7 +216,9 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
                     BigDecimal orderAmount = new BigDecimal(0);
                     for (OrderDetailBean orderDetailBean : cityRangeOrderDetailList) {
                         BigDecimal _tmpPrice = new BigDecimal(orderDetailBean.getSaleAmount());
-                        orderAmount = orderAmount.add(_tmpPrice);
+                        BigDecimal _count = new BigDecimal(orderDetailBean.getNum());
+                        orderAmount = orderAmount.add(_tmpPrice.multiply(_count));
+
                         cityName = orderDetailBean.getCityName();
                     }
 

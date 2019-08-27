@@ -76,7 +76,8 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
                 // 计算总金额
                 BigDecimal totalPrice = new BigDecimal(0);
                 for (OrderDetailBean orderDetailBean : _orderDetailBeanList) {
-                    BigDecimal _tmpPrice = new BigDecimal(orderDetailBean.getSaleAmount());
+                    BigDecimal _count = new BigDecimal(orderDetailBean.getNum());
+                    BigDecimal _tmpPrice = new BigDecimal(orderDetailBean.getSaleAmount()).multiply(_count);
                     totalPrice = totalPrice.add(_tmpPrice);
                 }
 

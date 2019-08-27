@@ -92,9 +92,10 @@ public class PromotionOverviewServiceImpl implements PromotionOverviewService {
             for (String promotionTypeName : promotionTypeSet) { // 遍历
                 List<OrderDetailBean> _orderDetailBeanList = orderDetailBeansByPromotionTypeMap.get(promotionTypeName);
 
-                Long orderAmout = 0L; // 统计订单数量
+                Long orderAmout = 0L; // 统计订单金额
                 for (OrderDetailBean orderDetailBean : _orderDetailBeanList) {
                     Float _tmpPrice = (orderDetailBean.getSaleAmount() == null ? 0L : orderDetailBean.getSaleAmount());
+                    _tmpPrice = _tmpPrice * orderDetailBean.getNum();
 
                     orderAmout = orderAmout + new BigDecimal(_tmpPrice).multiply(new BigDecimal(100)).longValue();
                 }

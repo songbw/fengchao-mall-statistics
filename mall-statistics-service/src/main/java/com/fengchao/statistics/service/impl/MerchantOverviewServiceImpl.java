@@ -68,7 +68,8 @@ public class MerchantOverviewServiceImpl implements MerchantOverviewService {
 
                 BigDecimal orderAmount = new BigDecimal(0);
                 for (OrderDetailBean orderDetailBean : _orderDetailBeanList) {
-                    BigDecimal _tmpPrice = new BigDecimal(orderDetailBean.getSaleAmount());
+                    BigDecimal _count = new BigDecimal(orderDetailBean.getNum());
+                    BigDecimal _tmpPrice = new BigDecimal(orderDetailBean.getSaleAmount()).multiply(_count);
                     orderAmount = orderAmount.add(_tmpPrice);
                 }
 

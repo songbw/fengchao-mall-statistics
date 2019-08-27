@@ -53,7 +53,10 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
                 // 订单金额
                 Long saleAmount = 0L; // 单位：分
                 if (orderDetailBean.getSaleAmount() != null) {
-                    saleAmount = new BigDecimal(orderDetailBean.getSaleAmount()).multiply(new BigDecimal(100)).longValue();
+                    BigDecimal _count = new BigDecimal(orderDetailBean.getNum());
+                    saleAmount = new BigDecimal(orderDetailBean.getSaleAmount())
+                            .multiply(_count)
+                            .multiply(new BigDecimal(100)).longValue();
                 }
 
                 //
