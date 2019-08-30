@@ -6,6 +6,7 @@ import com.dianping.cat.Cat;
 import com.dianping.cat.message.Event;
 import com.dianping.cat.message.Transaction;
 import com.fengchao.statistics.constants.StatisticConstants;
+import com.fengchao.statistics.utils.FengchaoMailUtil;
 import com.fengchao.statistics.utils.JSONUtil;
 import com.github.ltsopensource.core.domain.Action;
 import com.github.ltsopensource.core.domain.Job;
@@ -87,6 +88,8 @@ public class JobRunnerDispatcher implements JobRunner {
 
             transaction.addData("duration", stopWatch.getTotalTimeSeconds());
             transaction.complete();
+
+            FengchaoMailUtil.send("完成统计执行任务", "执行完成 用时(s):" + stopWatch.getTotalTimeSeconds());
         }
 
     }

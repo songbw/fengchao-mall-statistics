@@ -11,3 +11,7 @@ pass = 1hblsqt@TOM123
 
 #使用 STARTTLS安全连接，STARTTLS是对纯文本通信协议的扩展。
 startttlsEnable = true
+
+
+# 逗号分割
+mail.receivers=tom.jing@weesharing.com

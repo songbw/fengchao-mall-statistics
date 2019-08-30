@@ -28,4 +28,14 @@ public class BeanContext  implements ApplicationContextAware {
     public static <T> T getBean(Class<T> clz) throws BeansException {
         return (T)applicationContext.getBean(clz);
     }
+
+    /**
+     *
+     * @return
+     */
+    public static String getProfile() {
+        String profile = BeanContext.getApplicationContext().getEnvironment().getActiveProfiles()[0];
+
+        return profile;
+    }
 }
