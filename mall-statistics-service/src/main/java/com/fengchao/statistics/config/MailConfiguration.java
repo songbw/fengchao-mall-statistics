@@ -1,5 +1,6 @@
 package com.fengchao.statistics.config;
 
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
@@ -15,19 +16,18 @@ import java.util.List;
 @Configuration
 @PropertySource("classpath:mail.setting")
 @Slf4j
+@Getter
 public class MailConfiguration {
 
     /**
      *
      */
     @Value("${mail.receivers}")
-    public List<String> receivers;
+    private List<String> receivers;
 
     @PostConstruct//在servlet初始化的时候加载，并且只加载一次，和构造代码块的作用类似
     private void init(){
         log.info("load env.properties start!");
-
-        log.info("load env.properties end!");
     }
 
 

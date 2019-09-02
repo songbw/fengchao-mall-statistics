@@ -14,15 +14,16 @@ import java.util.List;
 public class FengchaoMailUtil {
 
     public static void send(String subject, String content) {
+        MailConfiguration mailConfiguration = BeanContext.getBean(MailConfiguration.class);
         // 发送邮件
-        send(MailConfiguration.receivers, subject, content);
+        send(mailConfiguration.getReceivers(), subject, content);
     }
 
     public static void send(List<String> receivers, String subject, String content) {
         log.info("发送邮件通知; tos={}, title={}, content={}", receivers, subject, content);
 
         // 发送邮件
-        subject = subject + "-" + BeanContext.getProfile();
+        subject = BeanContext.getProfile() + "-" + subject;
         MailUtil.send(receivers, subject, content, false);
 
         log.info("{} 告警邮件发送成功", subject);

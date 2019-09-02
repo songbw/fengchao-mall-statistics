@@ -22,6 +22,7 @@ import com.fengchao.statistics.rpc.extmodel.SysCompany;
 import com.fengchao.statistics.rpc.extmodel.WorkOrder;
 import com.fengchao.statistics.service.MerchantStatisticService;
 import com.fengchao.statistics.utils.DateUtil;
+import com.fengchao.statistics.utils.FengchaoMailUtil;
 import com.fengchao.statistics.utils.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -263,6 +264,8 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
                     startDateTime, endDateTime, e.getMessage(), e);
 
             Cat.logEvent(StatisticConstants.DAILY_STATISTIC_EXCEPTION_TYPE, StatisticConstants.M_ORDERAMOUNT_TREND, Event.SUCCESS, "traceId=" + MDC.get("X-B3-TraceId"));
+
+            FengchaoMailUtil.send("统计执行异常", "按照商户-城市(天)维度统计订单详情总金额数据 执行异常:" + e.getMessage());
         }
     }
 
@@ -355,6 +358,8 @@ public class MerchantStatisticServiceImpl implements MerchantStatisticService {
                     startDateTime, endDateTime, e.getMessage(), e);
 
             Cat.logEvent(StatisticConstants.DAILY_STATISTIC_EXCEPTION_TYPE, StatisticConstants.M_USER_TREND, Event.SUCCESS, "traceId=" + MDC.get("X-B3-TraceId"));
+
+            FengchaoMailUtil.send("统计执行异常", "按照商户维度统计用户数相关数据 执行异常:" + e.getMessage());
         }
     }
 

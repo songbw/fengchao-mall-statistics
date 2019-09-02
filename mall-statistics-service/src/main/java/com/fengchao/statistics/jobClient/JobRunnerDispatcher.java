@@ -82,6 +82,8 @@ public class JobRunnerDispatcher implements JobRunner {
             transaction.setStatus(e);
             transaction.addData("traceId", MDC.get("X-B3-TraceId"));
 
+            FengchaoMailUtil.send("统计执行异常", "执行异常:" + e.getMessage());
+
             return new Result(Action.EXECUTE_SUCCESS, "统计执行任务执行异常");
         } finally {
             stopWatch.stop();

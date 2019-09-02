@@ -12,6 +12,7 @@ import com.fengchao.statistics.rpc.extmodel.OrderDetailBean;
 import com.fengchao.statistics.rpc.extmodel.PromotionBean;
 import com.fengchao.statistics.service.PromotionOverviewService;
 import com.fengchao.statistics.utils.DateUtil;
+import com.fengchao.statistics.utils.FengchaoMailUtil;
 import com.fengchao.statistics.utils.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -142,6 +143,8 @@ public class PromotionOverviewServiceImpl implements PromotionOverviewService {
                     startDateTime, endDateTime, e.getMessage(), e);
 
             Cat.logEvent(StatisticConstants.DAILY_STATISTIC_EXCEPTION_TYPE, StatisticConstants.PROMOTION, Event.SUCCESS, "traceId=" + MDC.get("X-B3-TraceId"));
+
+            FengchaoMailUtil.send("统计执行异常", "按照活动promotion(天)维度统计订单详情数量额数据 执行异常:" + e.getMessage());
         }
     }
 

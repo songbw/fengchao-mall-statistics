@@ -12,6 +12,7 @@ import com.fengchao.statistics.rpc.extmodel.OrderDetailBean;
 import com.fengchao.statistics.rpc.extmodel.SysCompany;
 import com.fengchao.statistics.service.MerchantOverviewService;
 import com.fengchao.statistics.utils.DateUtil;
+import com.fengchao.statistics.utils.FengchaoMailUtil;
 import com.fengchao.statistics.utils.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.collections4.CollectionUtils;
@@ -112,6 +113,8 @@ public class MerchantOverviewServiceImpl implements MerchantOverviewService {
                     startDateTime, endDateTime, e.getMessage(), e);
 
             Cat.logEvent(StatisticConstants.DAILY_STATISTIC_EXCEPTION_TYPE, StatisticConstants.MERCHANT, Event.SUCCESS, "traceId=" + MDC.get("X-B3-TraceId"));
+
+            FengchaoMailUtil.send("统计执行异常", "按照商户merchant(天)维度统计订单详情总金额数据 执行异常:" + e.getMessage());
         }
     }
 
