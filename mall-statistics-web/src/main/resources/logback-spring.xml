@@ -2,9 +2,16 @@
 <configuration>
 
     <property name="server_name" value="statistics"/>
-    <property name="log_dir" value="../logs/"/>
     <property name="maxFileSize" value="100MB"/>
     <property name="maxHistory" value="180"/>
+
+    <springProfile name="test,prod,gatsn,gatzy">
+        <property name="log_dir" value="/data/logs/product"/>
+    </springProfile>
+
+    <springProfile name="dev,local">
+        <property name="log_dir" value="../logs/"/>
+    </springProfile>
 
     <!-- 控制台输出 -->
     <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
