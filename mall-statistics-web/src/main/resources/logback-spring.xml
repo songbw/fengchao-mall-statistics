@@ -6,7 +6,7 @@
     <property name="maxHistory" value="180"/>
 
     <springProfile name="test,prod,gatsn,gatzy">
-        <property name="log_dir" value="/data/logs/product"/>
+        <property name="log_dir" value="/data/logs/statistics"/>
     </springProfile>
 
     <springProfile name="dev,local">
