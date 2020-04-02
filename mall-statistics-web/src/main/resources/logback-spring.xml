@@ -5,7 +5,7 @@
     <property name="maxFileSize" value="100MB"/>
     <property name="maxHistory" value="180"/>
 
-    <springProfile name="test,prod,gatsn,gatzy">
+    <springProfile name="test,prod,gatsn,gatzy,tiyan">
         <property name="log_dir" value="/data/logs/statistics"/>
     </springProfile>
 
@@ -71,7 +71,7 @@
         </filter>
     </appender>
 
-    <springProfile name="test,prod,gatsn,gatzy">
+    <springProfile name="test,prod,gatsn,gatzy,tiyan">
         <root level="INFO" additivity="false">
             <appender-ref ref="INFO"/>
             <appender-ref ref="ERROR"/>
