@@ -4,6 +4,7 @@ import com.fengchao.statistics.bean.OperaResponse;
 import com.fengchao.statistics.feign.hystric.WorkOrderServiceClientFallbackFactory;
 import com.fengchao.statistics.rpc.extmodel.WorkOrder;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -17,9 +18,10 @@ public interface WorkOrdersServiceClient {
      * 获取退货人数
      *
      * @return
+     * @param renterId
      */
     @RequestMapping(value = "/work_orders/refunds", method = RequestMethod.GET)
-    OperaResponse refundOrdersCount();
+    OperaResponse refundOrdersCount(@RequestHeader("renter") String renterId);
 
     /**
      * 根据时间范围获取退货信息列表

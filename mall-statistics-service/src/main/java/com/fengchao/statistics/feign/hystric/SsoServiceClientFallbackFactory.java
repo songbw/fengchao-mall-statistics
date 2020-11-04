@@ -12,7 +12,7 @@ public class SsoServiceClientFallbackFactory implements FallbackFactory<SsoServi
     public SsoServiceClient create(Throwable throwable) {
         return new SsoServiceClient() {
             @Override
-            public OperaResult queryAllUsercount() {
+            public OperaResult queryAllUsercount(String renterId) {
                 return HystrixDefaultFallback.defaultFallback(throwable);
             }
         };

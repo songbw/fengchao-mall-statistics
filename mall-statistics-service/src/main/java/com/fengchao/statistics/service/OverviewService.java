@@ -19,7 +19,8 @@ public interface OverviewService {
      * 7.订单均价
      *
      * @return
+     * @param renterId
      */
-    OverviewResVo fetchOverviewStatistic() ;
+    OverviewResVo fetchOverviewStatistic(String renterId) ;
 
 }

@@ -1,7 +1,5 @@
 package com.fengchao.statistics.rpc;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
 import com.fengchao.statistics.bean.*;
 import com.fengchao.statistics.feign.OrderServiceClient;
 import com.fengchao.statistics.rpc.extmodel.DayStatisticsBean;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @Author tom
@@ -66,14 +63,15 @@ public class OrdersRpcService {
      *  4.(已支付)下单人数
      *
      * @return
+     * @param renterId
      */
-    public DayStatisticsBean queryOrdersOverviewStatistic() {
+    public DayStatisticsBean queryOrdersOverviewStatistic(String renterId) {
         // 返回值
         DayStatisticsBean dayStatisticsBean = null;
 
         // 执行rpc调用
         log.info("获取订单相关的统计数据 调用order rpc服务 入参:无");
-        OperaResponse<DayStatisticsBean> operaResponse = orderServiceClient.statistics();
+        OperaResponse<DayStatisticsBean> operaResponse = orderServiceClient.statistics(renterId);
         log.info("获取订单相关的统计数据 调用order rpc服务 返回:{}", JSONUtil.toJsonString(operaResponse));
 
         // 处理返回

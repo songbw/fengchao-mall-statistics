@@ -18,7 +18,7 @@ public class OrderServiceClientFallbackFactory implements FallbackFactory<OrderS
 
         return new OrderServiceClient() {
             @Override
-            public OperaResponse<DayStatisticsBean> statistics() {
+            public OperaResponse<DayStatisticsBean> statistics(String renterId) {
                 return HystrixDefaultFallback.fallbackResponse(throwable);
             }
 

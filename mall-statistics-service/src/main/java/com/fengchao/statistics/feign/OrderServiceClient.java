@@ -6,6 +6,7 @@ import com.fengchao.statistics.feign.hystric.OrderServiceClientFallbackFactory;
 import com.fengchao.statistics.rpc.extmodel.DayStatisticsBean;
 import com.fengchao.statistics.rpc.extmodel.OrderDetailBean;
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -19,9 +20,10 @@ public interface OrderServiceClient {
      * 获取平台整体运营的统计数据
      *
      * @return
+     * @param renterId
      */
     @RequestMapping(value = "/order/statistics", method = RequestMethod.GET)
-    OperaResponse<DayStatisticsBean> statistics();
+    OperaResponse<DayStatisticsBean> statistics(@RequestHeader("renter") String renterId);
 
     /**
      * 获取商户整体运营的统计数据

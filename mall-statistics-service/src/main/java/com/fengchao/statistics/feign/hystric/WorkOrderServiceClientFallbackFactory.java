@@ -12,7 +12,7 @@ public class WorkOrderServiceClientFallbackFactory implements FallbackFactory<Wo
     public WorkOrdersServiceClient create(Throwable throwable) {
         return new WorkOrdersServiceClient() {
             @Override
-            public OperaResponse refundOrdersCount() {
+            public OperaResponse refundOrdersCount(String renterId) {
                 return HystrixDefaultFallback.fallbackResponse(throwable);
             }
 

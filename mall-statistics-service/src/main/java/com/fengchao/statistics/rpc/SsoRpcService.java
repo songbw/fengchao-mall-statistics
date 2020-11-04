@@ -7,8 +7,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-
 /**
  * @Author tom
  * @Date 19-7-25 下午2:29
@@ -29,13 +27,13 @@ public class SsoRpcService {
      *
      * @return
      */
-    public int queryAllUsercount() {
+    public int queryAllUsercount(String renterId) {
         // 返回值
         int userCount = 0;
 
         // 执行rpc调用
         log.info("查询所有用户数 调用sso rpc服务 入参:无");
-        OperaResult operaResult = ssoServiceClient.queryAllUsercount();
+        OperaResult operaResult = ssoServiceClient.queryAllUsercount(renterId);
         log.info("查询所有用户数 调用sso rpc服务 返回:{}", JSONUtil.toJsonString(operaResult));
 
         // 处理返回

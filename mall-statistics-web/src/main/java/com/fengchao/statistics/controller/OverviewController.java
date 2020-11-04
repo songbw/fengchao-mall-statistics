@@ -4,7 +4,6 @@ import com.fengchao.statistics.bean.OperaResponse;
 import com.fengchao.statistics.bean.vo.OverviewResVo;
 import com.fengchao.statistics.service.OverviewService;
 import com.fengchao.statistics.utils.JSONUtil;
-import com.github.ltsopensource.jobclient.JobClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -32,11 +31,11 @@ public class OverviewController {
      * @return
      */
     @GetMapping("sum")
-    private OperaResponse overview(OperaResponse operaResponse) {
-        log.info("获取总揽统计数据 入参:无");
+    private OperaResponse overview(@RequestHeader("renter") String renterHeader, OperaResponse operaResponse) {
+        log.info("获取总揽统计数据 入参:{}", renterHeader);
 
         try {
-            OverviewResVo overviewResVo = overviewService.fetchOverviewStatistic();
+            OverviewResVo overviewResVo = overviewService.fetchOverviewStatistic(renterHeader);
             operaResponse.setData(overviewResVo);
         } catch (Exception e) {
             log.error("获取总揽统计数据 异常:{}", e.getMessage(), e);

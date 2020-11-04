@@ -32,13 +32,13 @@ public class WorkOrdersRpcService {
      *
      * @return
      */
-    public int queryRefundOrdersCount() {
+    public int queryRefundOrdersCount(String renterId) {
         // 返回值
         int refundOrdersCount = 0;
 
         // 执行rpc调用
         log.info("查询退货单数 调用workorders rpc服务 入参:无");
-        OperaResponse operaResponse = workOrdersServiceClient.refundOrdersCount();
+        OperaResponse operaResponse = workOrdersServiceClient.refundOrdersCount(renterId);
         log.info("查询退货单数 调用workorders rpc服务 返回:{}", JSONUtil.toJsonString(operaResponse));
 
         // 处理返回

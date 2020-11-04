@@ -51,11 +51,11 @@ public class OverviewServiceImpl implements OverviewService {
     }
 
     @Override
-    public OverviewResVo fetchOverviewStatistic() {
+    public OverviewResVo fetchOverviewStatistic(String renterId) {
         // 1.获取订单支付总额
         // 3.(已支付)订单总量
         // 4.(已支付)下单人数
-        DayStatisticsBean dayStatisticsBean = ordersRpcService.queryOrdersOverviewStatistic();
+        DayStatisticsBean dayStatisticsBean = ordersRpcService.queryOrdersOverviewStatistic(renterId);
         if (dayStatisticsBean == null) {
             dayStatisticsBean = new DayStatisticsBean();
         }
@@ -65,10 +65,10 @@ public class OverviewServiceImpl implements OverviewService {
         Integer orderUserCount = dayStatisticsBean.getOrderPeopleNum(); // (已支付)下单人数
 
         // 2.用户总数
-        int userCount = ssoRpcService.queryAllUsercount();
+        int userCount = ssoRpcService.queryAllUsercount(renterId);
 
         // 5.退货单数
-        int refundOrderCount = workOrdersRpcService.queryRefundOrdersCount();
+        int refundOrderCount = workOrdersRpcService.queryRefundOrdersCount(renterId);
 
         // 6.客单价
         BigDecimal perCustomPriceB = new BigDecimal(0);
