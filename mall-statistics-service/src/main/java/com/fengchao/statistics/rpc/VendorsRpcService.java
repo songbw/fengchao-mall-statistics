@@ -57,4 +57,36 @@ public class VendorsRpcService {
 
         return sysCompanyList;
     }
+
+    public List<String> queryAppIdList(String renterId){
+        List<String> renterCompanyList = new ArrayList<>();
+
+        ResultObject<List<String>> response = vendorsServiceClient.queryAppIdList(renterId) ;
+
+        log.debug("vendor 服务 queryAppIdList 入参renterId： {},  返回值：{}",renterId, JSONUtil.toJsonString(response));
+        if (response.getCode() == 200) {
+            renterCompanyList = response.getData() ;
+        } else {
+            log.warn("查询所有的商户信息 调用vendors rpc服务 错误!");
+        }
+        return renterCompanyList;
+
+    }
+
+    public List<Integer> queryRenterMerhantList(String renterId){
+        List<Integer> renterCompanyList = new ArrayList<>();
+
+        ResultObject<List<Integer>> response = vendorsServiceClient.queryRenterMerchantList(renterId) ;
+
+        log.debug("vendor 服务 queryRenterMerhantList 入参renterId： {},  返回值：{}",renterId, JSONUtil.toJsonString(response));
+        if (response.getCode() == 200) {
+            renterCompanyList = response.getData() ;
+        } else {
+            log.warn("查询所有的商户信息 调用vendors rpc服务 错误!");
+        }
+        return renterCompanyList;
+
+    }
+
+
 }

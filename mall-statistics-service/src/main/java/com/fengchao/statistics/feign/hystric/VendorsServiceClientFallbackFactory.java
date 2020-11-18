@@ -27,6 +27,20 @@ public class VendorsServiceClientFallbackFactory implements FallbackFactory<Vend
                 ResultObject resultObject = new ResultObject<>(500, "vendors 服务降级", null);
                 return resultObject;
             }
+
+            @Override
+            public ResultObject<List<String>> queryAppIdList(String renterId) {
+                log.info("根据renterId集合查询appId列表信息 调用vendors rpc服务 降级:{}", throwable.getMessage(), throwable);
+                ResultObject resultObject = new ResultObject<>(500, "vendors 服务降级", null);
+                return resultObject;
+            }
+
+            @Override
+            public ResultObject<List<Integer>> queryRenterMerchantList(String renterId) {
+                log.info("根据renterId集合查询merchantId 列表信息 调用vendors rpc服务 降级:{}", throwable.getMessage(), throwable);
+                ResultObject resultObject = new ResultObject<>(500, "vendors 服务降级", null);
+                return resultObject;
+            }
         };
     }
 

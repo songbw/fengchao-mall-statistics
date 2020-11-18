@@ -12,7 +12,7 @@
             <property name="suppressAllComments" value="true"/>
         </commentGenerator>
         <!--数据库链接URL，用户名、密码 -->
-        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://192.168.200.37:3306/mall_statistics" userId="fengchao" password="Smartautotech@123">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://139.9.114.143:3306/mall_statistics" userId="wuxi" password="Smartautotech@123">
         </jdbcConnection>
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false"/>
@@ -32,7 +32,10 @@
         </javaClientGenerator>
         <!-- 要生成的表 tableName是数据库中的表名或视图名 domainObjectName是实体类名 -->
 
-        <table tableName="m_statistic_user">
+<!--        <table tableName="m_statistic_user">-->
+<!--            <generatedKey column="id" sqlStatement="JDBC" />-->
+<!--        </table>-->
+        <table tableName="category_overview">
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
     </context>

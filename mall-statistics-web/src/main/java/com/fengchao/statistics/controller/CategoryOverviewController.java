@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,12 +36,12 @@ public class CategoryOverviewController {
      * @return
      */
     @GetMapping("sum")
-    private OperaResponse overview(String startDate, String endDate, OperaResponse operaResponse) {
-        log.info("根据时间范围获取按照品类维度的统计结果, 入参 startDate:{}, endDate:{}", startDate, endDate);
+    private OperaResponse overview(@RequestHeader("renter") String renterHeader, String startDate, String endDate, OperaResponse operaResponse) {
+        log.debug("根据时间范围获取按照品类维度的统计结果, 入参 startDate:{}, endDate:{}, renterHander: {}", startDate, endDate, renterHeader);
 
         try {
             List<CategoryOverviewResVo> categoryOverviewResVoList =
-                    categoryOverviewService.fetchStatisticDailyResult(startDate, endDate);
+                    categoryOverviewService.fetchStatisticDailyResult(startDate, endDate, renterHeader);
             operaResponse.setData(categoryOverviewResVoList);
         } catch (Exception e) {
             log.info("根据时间范围获取按照品类维度的统计结果 异常:{}", e.getMessage(), e);

@@ -32,7 +32,7 @@ public class OverviewController {
      */
     @GetMapping("sum")
     private OperaResponse overview(@RequestHeader("renter") String renterHeader, OperaResponse operaResponse) {
-        log.info("获取总揽统计数据 入参:{}", renterHeader);
+        log.debug("获取总揽统计数据 入参:{}", renterHeader);
 
         try {
             OverviewResVo overviewResVo = overviewService.fetchOverviewStatistic(renterHeader);

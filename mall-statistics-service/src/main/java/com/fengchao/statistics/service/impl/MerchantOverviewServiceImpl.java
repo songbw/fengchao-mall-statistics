@@ -119,13 +119,15 @@ public class MerchantOverviewServiceImpl implements MerchantOverviewService {
     }
 
     @Override
-    public List<MerchantOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate) throws Exception {
+    public List<MerchantOverviewResVo> fetchStatisticDailyResult(String renterId, String startDate, String endDate) throws Exception {
         // 1. 查询数据库
         Date _startDate = DateUtil.parseDateTime(startDate + " 00:00:00", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         Date _endDate = DateUtil.parseDateTime(endDate + " 23:59:59", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         log.info("根据时间范围获取daily型的商户维度统计数据 日期范围: {} - {}", _startDate, _endDate);
+        // TODO 供应商列表
+        List<Integer> merchantIds = vendorsRpcService.queryRenterMerhantList(renterId) ;
         List<MerchantOverview> merchantOverviewList =
-                merchantOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate);
+                merchantOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate, merchantIds);
         log.info("根据时间范围获取daily型的商户维度统计数据 数据库返回: {}", JSONUtil.toJsonString(merchantOverviewList));
         if (CollectionUtils.isEmpty(merchantOverviewList)) {
             return Collections.emptyList();

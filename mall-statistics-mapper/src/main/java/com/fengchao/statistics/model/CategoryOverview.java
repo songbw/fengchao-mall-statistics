@@ -25,6 +25,8 @@ public class CategoryOverview {
 
     private Date updateTime;
 
+    private String appId;
+
     public Long getId() {
         return id;
     }
@@ -111,5 +113,13 @@ public class CategoryOverview {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getAppId() {
+        return appId;
+    }
+
+    public void setAppId(String appId) {
+        this.appId = appId == null ? null : appId.trim();
     }
 }

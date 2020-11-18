@@ -25,9 +25,11 @@ public interface MerchantOverviewService {
     /**
      * 根据时间范围获取每日统计的数据
      *
+     *
+     * @param renterId
      * @param startDate
      * @param endDate
      * @return
      */
-    List<MerchantOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate) throws Exception;
+    List<MerchantOverviewResVo> fetchStatisticDailyResult(String renterId, String startDate, String endDate) throws Exception;
 }

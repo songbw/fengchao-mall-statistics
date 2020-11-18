@@ -8,6 +8,7 @@ import com.fengchao.statistics.constants.StatisticPeriodTypeEnum;
 import com.fengchao.statistics.dao.CategoryOverviewDao;
 import com.fengchao.statistics.model.CategoryOverview;
 import com.fengchao.statistics.rpc.ProductRpcService;
+import com.fengchao.statistics.rpc.VendorsRpcService;
 import com.fengchao.statistics.rpc.extmodel.CategoryQueryBean;
 import com.fengchao.statistics.rpc.extmodel.OrderDetailBean;
 import com.fengchao.statistics.service.CategoryOverviewService;
@@ -35,6 +36,9 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
     @Autowired
     private CategoryOverviewDao categoryOverviewDao;
 
+    @Autowired
+    private VendorsRpcService vendorsRpcService;
+
     @Override
     public void doDailyStatistic(List<OrderDetailBean> orderDetailBeanList, String startDateTime,
                                  String endDateTime, Date statisticDate) throws Exception {
@@ -42,18 +46,22 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
 
         try {
             // 1. 根据一级品类维度将订单详情分组
-            Map<Integer, List<OrderDetailBean>> orderDetailBeanListMap = new HashMap<>();
+            Map<String, List<OrderDetailBean>> orderDetailBeanListMap = new HashMap<>();
+            List<Integer> firstCategorys = new ArrayList<>();
             for (OrderDetailBean orderDetailBean : orderDetailBeanList) { // 遍历订单详情
                 // 处理品类信息
                 String category = orderDetailBean.getCategory();
+                String subOrderId = orderDetailBean.getSubOrderId() ;
+                String appId = subOrderId.substring(0, 2) ;
                 if (StringUtils.isNotBlank(category)) {
                     // 一级品类信息
                     Integer firstCategory = Integer.valueOf(category.substring(0, 2));
+                    firstCategorys.add(firstCategory) ;
 
-                    List<OrderDetailBean> _list = orderDetailBeanListMap.get(firstCategory);
+                    List<OrderDetailBean> _list = orderDetailBeanListMap.get(firstCategory + appId);
                     if (_list == null) {
                         _list = new ArrayList<>();
-                        orderDetailBeanListMap.put(firstCategory, _list);
+                        orderDetailBeanListMap.put(firstCategory + appId, _list);
                     }
                     _list.add(orderDetailBean);
                 }
@@ -62,18 +70,22 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
             log.info("按照品类category(天)维度统计订单详情总金额数据; 根据一级品类维度将订单详情分组结果:{}", JSONUtil.toJsonString(orderDetailBeanListMap));
 
             // 2. 获取一级品类名称
-            Set<Integer> firstCategoryIdSet = orderDetailBeanListMap.keySet();
+            Set<String> firstCategoryIdAppIdSet = orderDetailBeanListMap.keySet();
+//            List<CategoryQueryBean> categoryQueryBeanList =
+//                    productRpcService.queryCategorysByCategoryIdList(new ArrayList<>(firstCategoryIdSet));
             List<CategoryQueryBean> categoryQueryBeanList =
-                    productRpcService.queryCategorysByCategoryIdList(new ArrayList<>(firstCategoryIdSet));
+                    productRpcService.queryCategorysByCategoryIdList(firstCategorys);
             // 转map key: categoryId  value: CategoryQueryBean
             Map<Integer, CategoryQueryBean> categoryQueryBeanMap =
                     categoryQueryBeanList.stream().collect(Collectors.toMap(c -> c.getId(), c -> c));
 
             // 3. 获取统计数据
             List<CategoryOverview> categoryOverviewList = new ArrayList<>(); // 统计数据集合
-            for (Integer categoryId : firstCategoryIdSet) { // 遍历 orderDetailBeanListMap
+            for (String categoryIdAppId : firstCategoryIdAppIdSet) { // 遍历 orderDetailBeanListMap
+                Integer categoryId = Integer.valueOf(categoryIdAppId.substring(0, 2)) ;
+                String _appId = categoryIdAppId.substring(2, 4);
                 // 获取订单详情集合
-                List<OrderDetailBean> _orderDetailBeanList = orderDetailBeanListMap.get(categoryId);
+                List<OrderDetailBean> _orderDetailBeanList = orderDetailBeanListMap.get(categoryIdAppId);
                 // 计算总金额
                 BigDecimal totalPrice = new BigDecimal(0);
                 for (OrderDetailBean orderDetailBean : _orderDetailBeanList) {
@@ -92,6 +104,7 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
                 categoryOverview.setStatisticStartTime(DateUtil.parseDateTime(startDateTime, DateUtil.DATE_YYYY_MM_DD_HH_MM_SS));
                 categoryOverview.setStatisticEndTime(DateUtil.parseDateTime(endDateTime, DateUtil.DATE_YYYY_MM_DD_HH_MM_SS));
                 categoryOverview.setPeriodType(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
+                categoryOverview.setAppId(_appId);
 
                 //
                 categoryOverviewList.add(categoryOverview);
@@ -125,14 +138,16 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
     }
 
     @Override
-    public List<CategoryOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate) throws Exception {
+    public List<CategoryOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate, String renterHeader) throws Exception {
         // 1. 查询数据库
         Date _startDate = DateUtil.parseDateTime(startDate + " 00:00:00", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         Date _endDate = DateUtil.parseDateTime(endDate + " 23:59:59", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
-        log.info("根据时间范围获取daily型的品类维度统计数据 日期范围: {} - {}", _startDate, _endDate);
+        log.debug("根据时间范围获取daily型的品类维度统计数据 日期范围: {} - {}", _startDate, _endDate);
+        // 获取appIds
+        List<String> appIds = vendorsRpcService.queryAppIdList(renterHeader) ;
         List<CategoryOverview> categoryOverviewList =
-                categoryOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate);
-        log.info("根据时间范围获取daily型的品类维度统计数据 数据库返回: {}", JSONUtil.toJsonString(categoryOverviewList));
+                categoryOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate, appIds);
+        log.debug("根据时间范围获取daily型的品类维度统计数据 数据库返回: {}", JSONUtil.toJsonString(categoryOverviewList));
 
         if (CollectionUtils.isEmpty(categoryOverviewList)) {
             return Collections.emptyList();

@@ -65,7 +65,7 @@ public class CategoryOverviewDao {
      * @param endDate
      * @return
      */
-    public List<CategoryOverview> selectDailyStatisticByDateRange(Date startDate, Date endDate) {
+    public List<CategoryOverview> selectDailyStatisticByDateRange(Date startDate, Date endDate, List<String> appIds) {
         CategoryOverviewExample categoryOverviewExample = new CategoryOverviewExample();
 
         CategoryOverviewExample.Criteria criteria = categoryOverviewExample.createCriteria();
@@ -73,6 +73,7 @@ public class CategoryOverviewDao {
 
         criteria.andPeriodTypeEqualTo(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
         criteria.andStatisticStartTimeBetween(startDate, endDate);
+        criteria.andAppIdIn(appIds);
 
         List<CategoryOverview> categoryOverviewList =
                 categoryOverviewMapper.selectByExample(categoryOverviewExample);

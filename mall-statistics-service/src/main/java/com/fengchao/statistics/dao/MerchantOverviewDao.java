@@ -65,7 +65,7 @@ public class MerchantOverviewDao {
      * @param endDate
      * @return
      */
-    public List<MerchantOverview> selectDailyStatisticByDateRange(Date startDate, Date endDate) {
+    public List<MerchantOverview> selectDailyStatisticByDateRange(Date startDate, Date endDate, List<Integer> merchantIds) {
         MerchantOverviewExample merchantOverviewExample = new MerchantOverviewExample();
 
         MerchantOverviewExample.Criteria criteria = merchantOverviewExample.createCriteria();
@@ -73,6 +73,9 @@ public class MerchantOverviewDao {
 
         criteria.andPeriodTypeEqualTo(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
         criteria.andStatisticStartTimeBetween(startDate, endDate);
+        if (merchantIds != null && merchantIds.size() > 0) {
+            criteria.andMerchantIdIn(merchantIds);
+        }
 
         List<MerchantOverview> merchantOverviewList =
                 merchantOverviewMapper.selectByExample(merchantOverviewExample);
