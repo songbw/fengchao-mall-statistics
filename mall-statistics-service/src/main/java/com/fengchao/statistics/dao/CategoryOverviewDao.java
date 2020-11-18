@@ -73,7 +73,9 @@ public class CategoryOverviewDao {
 
         criteria.andPeriodTypeEqualTo(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
         criteria.andStatisticStartTimeBetween(startDate, endDate);
-        criteria.andAppIdIn(appIds);
+        if (appIds != null && appIds.size() > 0) {
+            criteria.andAppIdIn(appIds);
+        }
 
         List<CategoryOverview> categoryOverviewList =
                 categoryOverviewMapper.selectByExample(categoryOverviewExample);
