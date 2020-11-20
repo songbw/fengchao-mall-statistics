@@ -1,5 +1,7 @@
 package com.fengchao.statistics.feign;
 
+
+import com.alibaba.fastjson.JSONObject;
 import com.fengchao.statistics.feign.hystric.VendorsServiceClientFallbackFactory;
 import com.fengchao.statistics.rpc.extmodel.ResultObject;
 import com.fengchao.statistics.rpc.extmodel.SysCompany;
@@ -26,4 +28,7 @@ public interface VendorsServiceClient {
 
     @RequestMapping(value = "/renter/api/companies", method = RequestMethod.GET)
     ResultObject<List<Integer>> queryRenterMerchantList(@RequestParam("renterId") String renterId);
+
+    @RequestMapping(value = "/renter/api/appIdrenterIdMaps", method = RequestMethod.GET)
+    ResultObject<JSONObject> queryAppIdAndRenterId(@RequestParam("appIdList") List<String> appIds);
 }

@@ -1,5 +1,6 @@
 package com.fengchao.statistics.feign.hystric;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fengchao.statistics.feign.VendorsServiceClient;
 import com.fengchao.statistics.rpc.extmodel.ResultObject;
 import com.fengchao.statistics.rpc.extmodel.SysCompany;
@@ -38,6 +39,13 @@ public class VendorsServiceClientFallbackFactory implements FallbackFactory<Vend
             @Override
             public ResultObject<List<Integer>> queryRenterMerchantList(String renterId) {
                 log.info("根据renterId集合查询merchantId 列表信息 调用vendors rpc服务 降级:{}", throwable.getMessage(), throwable);
+                ResultObject resultObject = new ResultObject<>(500, "vendors 服务降级", null);
+                return resultObject;
+            }
+
+            @Override
+            public ResultObject<JSONObject> queryAppIdAndRenterId(List<String> appIds) {
+                log.info("根据appIds集合查询appId renterId 列表信息 调用vendors rpc服务 降级:{}", throwable.getMessage(), throwable);
                 ResultObject resultObject = new ResultObject<>(500, "vendors 服务降级", null);
                 return resultObject;
             }

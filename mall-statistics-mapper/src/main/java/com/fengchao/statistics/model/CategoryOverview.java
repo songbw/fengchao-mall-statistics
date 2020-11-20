@@ -25,7 +25,7 @@ public class CategoryOverview {
 
     private Date updateTime;
 
-    private String appId;
+    private String renterId;
 
     public Long getId() {
         return id;
@@ -115,11 +115,11 @@ public class CategoryOverview {
         this.updateTime = updateTime;
     }
 
-    public String getAppId() {
-        return appId;
+    public String getRenterId() {
+        return renterId;
     }
 
-    public void setAppId(String appId) {
-        this.appId = appId == null ? null : appId.trim();
+    public void setRenterId(String renterId) {
+        this.renterId = renterId == null ? null : renterId.trim();
     }
 }

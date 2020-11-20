@@ -1,5 +1,6 @@
 package com.fengchao.statistics.rpc;
 
+import com.alibaba.fastjson.JSONObject;
 import com.fengchao.statistics.feign.VendorsServiceClient;
 import com.fengchao.statistics.rpc.extmodel.ResultObject;
 import com.fengchao.statistics.rpc.extmodel.SysCompany;
@@ -85,6 +86,21 @@ public class VendorsRpcService {
             log.warn("查询所有的商户信息 调用vendors rpc服务 错误!");
         }
         return renterCompanyList;
+
+    }
+
+    public JSONObject queryAppIdAndRenterIdMap(List<String> appIds){
+        JSONObject jsonObject = new JSONObject();
+
+        ResultObject<JSONObject> response = vendorsServiceClient.queryAppIdAndRenterId(appIds) ;
+
+        log.debug("vendor 服务 queryAppIdAndRenterIdMap 入参appIds： {},  返回值：{}",appIds, JSONUtil.toJsonString(response));
+        if (response.getCode() == 200) {
+            jsonObject = response.getData() ;
+        } else {
+            log.warn("查询所有的商户信息 调用vendors rpc服务 错误!");
+        }
+        return jsonObject;
 
     }
 

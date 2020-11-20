@@ -1,5 +1,6 @@
 package com.fengchao.statistics.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dianping.cat.Cat;
 import com.dianping.cat.message.Event;
 import com.fengchao.statistics.bean.vo.CategoryOverviewResVo;
@@ -48,20 +49,26 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
             // 1. 根据一级品类维度将订单详情分组
             Map<String, List<OrderDetailBean>> orderDetailBeanListMap = new HashMap<>();
             List<Integer> firstCategorys = new ArrayList<>();
+            List<String> appIds = orderDetailBeanList.stream().map(orderDetailBean -> {
+                String appId = orderDetailBean.getSubOrderId().substring(0, 2) ;
+                return appId;
+            }).collect(Collectors.toList());
+            JSONObject jsonObject = vendorsRpcService.queryAppIdAndRenterIdMap(appIds) ;
             for (OrderDetailBean orderDetailBean : orderDetailBeanList) { // 遍历订单详情
                 // 处理品类信息
                 String category = orderDetailBean.getCategory();
                 String subOrderId = orderDetailBean.getSubOrderId() ;
                 String appId = subOrderId.substring(0, 2) ;
+                String renterId = jsonObject.getString(appId) ;
                 if (StringUtils.isNotBlank(category)) {
                     // 一级品类信息
                     Integer firstCategory = Integer.valueOf(category.substring(0, 2));
                     firstCategorys.add(firstCategory) ;
 
-                    List<OrderDetailBean> _list = orderDetailBeanListMap.get(firstCategory + appId);
+                    List<OrderDetailBean> _list = orderDetailBeanListMap.get(firstCategory + renterId);
                     if (_list == null) {
                         _list = new ArrayList<>();
-                        orderDetailBeanListMap.put(firstCategory + appId, _list);
+                        orderDetailBeanListMap.put(firstCategory + renterId, _list);
                     }
                     _list.add(orderDetailBean);
                 }
@@ -83,7 +90,7 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
             List<CategoryOverview> categoryOverviewList = new ArrayList<>(); // 统计数据集合
             for (String categoryIdAppId : firstCategoryIdAppIdSet) { // 遍历 orderDetailBeanListMap
                 Integer categoryId = Integer.valueOf(categoryIdAppId.substring(0, 2)) ;
-                String _appId = categoryIdAppId.substring(2, 4);
+                String _renterId = categoryIdAppId.substring(2);
                 // 获取订单详情集合
                 List<OrderDetailBean> _orderDetailBeanList = orderDetailBeanListMap.get(categoryIdAppId);
                 // 计算总金额
@@ -104,7 +111,7 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
                 categoryOverview.setStatisticStartTime(DateUtil.parseDateTime(startDateTime, DateUtil.DATE_YYYY_MM_DD_HH_MM_SS));
                 categoryOverview.setStatisticEndTime(DateUtil.parseDateTime(endDateTime, DateUtil.DATE_YYYY_MM_DD_HH_MM_SS));
                 categoryOverview.setPeriodType(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
-                categoryOverview.setAppId(_appId);
+                categoryOverview.setRenterId(_renterId);
 
                 //
                 categoryOverviewList.add(categoryOverview);
