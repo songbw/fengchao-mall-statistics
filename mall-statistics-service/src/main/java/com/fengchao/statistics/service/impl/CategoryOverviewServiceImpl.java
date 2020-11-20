@@ -150,10 +150,9 @@ public class CategoryOverviewServiceImpl implements CategoryOverviewService {
         Date _startDate = DateUtil.parseDateTime(startDate + " 00:00:00", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         Date _endDate = DateUtil.parseDateTime(endDate + " 23:59:59", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         log.debug("根据时间范围获取daily型的品类维度统计数据 日期范围: {} - {}", _startDate, _endDate);
-        // 获取appIds
-        List<String> appIds = vendorsRpcService.queryAppIdList(renterHeader) ;
+
         List<CategoryOverview> categoryOverviewList =
-                categoryOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate, appIds);
+                categoryOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate, renterHeader);
         log.debug("根据时间范围获取daily型的品类维度统计数据 数据库返回: {}", JSONUtil.toJsonString(categoryOverviewList));
 
         if (CollectionUtils.isEmpty(categoryOverviewList)) {

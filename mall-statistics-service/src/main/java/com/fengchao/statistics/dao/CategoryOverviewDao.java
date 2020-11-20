@@ -5,6 +5,7 @@ import com.fengchao.statistics.constants.StatisticPeriodTypeEnum;
 import com.fengchao.statistics.mapper.CategoryOverviewMapper;
 import com.fengchao.statistics.model.CategoryOverview;
 import com.fengchao.statistics.model.CategoryOverviewExample;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -65,7 +66,7 @@ public class CategoryOverviewDao {
      * @param endDate
      * @return
      */
-    public List<CategoryOverview> selectDailyStatisticByDateRange(Date startDate, Date endDate, List<String> appIds) {
+    public List<CategoryOverview> selectDailyStatisticByDateRange(Date startDate, Date endDate, String renterId) {
         CategoryOverviewExample categoryOverviewExample = new CategoryOverviewExample();
 
         CategoryOverviewExample.Criteria criteria = categoryOverviewExample.createCriteria();
@@ -73,8 +74,8 @@ public class CategoryOverviewDao {
 
         criteria.andPeriodTypeEqualTo(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
         criteria.andStatisticStartTimeBetween(startDate, endDate);
-        if (appIds != null && appIds.size() > 0) {
-            criteria.andAppIdIn(appIds);
+        if (StringUtils.isNotBlank(renterId)) {
+            criteria.andRenterIdEqualTo(renterId);
         }
 
         List<CategoryOverview> categoryOverviewList =
