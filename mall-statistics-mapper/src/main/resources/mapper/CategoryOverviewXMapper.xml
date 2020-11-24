@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fengchao.statistics.mapper.CategoryOverviewXMapper" >
+  <resultMap id="BaseResultMap" type="com.fengchao.statistics.model.CategoryOverview">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="category_fcode" jdbcType="VARCHAR" property="categoryFcode" />
+    <result column="category_fname" jdbcType="VARCHAR" property="categoryFname" />
+    <result column="order_amount" jdbcType="BIGINT" property="orderAmount" />
+    <result column="statistics_date" jdbcType="DATE" property="statisticsDate" />
+    <result column="statistic_start_time" jdbcType="TIMESTAMP" property="statisticStartTime" />
+    <result column="statistic_end_time" jdbcType="TIMESTAMP" property="statisticEndTime" />
+    <result column="period_type" jdbcType="SMALLINT" property="periodType" />
+    <result column="istatus" jdbcType="SMALLINT" property="istatus" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="renter_id" jdbcType="VARCHAR" property="renterId" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, category_fcode, category_fname, order_amount, statistics_date, statistic_start_time,
+    statistic_end_time, period_type, istatus, create_time, update_time, renter_id
+  </sql>
+  <select id="selectAllSum" resultMap="BaseResultMap" parameterType="map">
+    select sum(order_amount), category_fcode, category_fname
+    FROM category_overview
+    where <![CDATA[statistic_start_time between #{startDate} and #{endDate}]]> and istatus = 1 and period_type = 1
+    GROUP BY category_fcode
+  </select>
+
+</mapper>

@@ -3,6 +3,7 @@ package com.fengchao.statistics.dao;
 import com.fengchao.statistics.constants.IStatusEnum;
 import com.fengchao.statistics.constants.StatisticPeriodTypeEnum;
 import com.fengchao.statistics.mapper.CategoryOverviewMapper;
+import com.fengchao.statistics.mapper.CategoryOverviewXMapper;
 import com.fengchao.statistics.model.CategoryOverview;
 import com.fengchao.statistics.model.CategoryOverviewExample;
 import org.apache.commons.lang.StringUtils;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 /**
@@ -20,10 +22,12 @@ import java.util.List;
 public class CategoryOverviewDao {
 
     private CategoryOverviewMapper categoryOverviewMapper;
+    private CategoryOverviewXMapper categoryOverviewXMapper ;
 
     @Autowired
-    public CategoryOverviewDao(CategoryOverviewMapper categoryOverviewMapper) {
+    public CategoryOverviewDao(CategoryOverviewMapper categoryOverviewMapper, CategoryOverviewXMapper categoryOverviewXMapper) {
         this.categoryOverviewMapper = categoryOverviewMapper;
+        this.categoryOverviewXMapper = categoryOverviewXMapper;
     }
 
     /**
@@ -74,13 +78,17 @@ public class CategoryOverviewDao {
 
         criteria.andPeriodTypeEqualTo(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
         criteria.andStatisticStartTimeBetween(startDate, endDate);
-        if (StringUtils.isNotBlank(renterId)) {
+        List<CategoryOverview> categoryOverviewList = null;
+        if (StringUtils.isNotBlank(renterId) && !"0".equals(renterId)) {
             criteria.andRenterIdEqualTo(renterId);
+            categoryOverviewList =
+                    categoryOverviewMapper.selectByExample(categoryOverviewExample);
+        } else {
+            HashMap map = new HashMap();
+            map.put("startDate", startDate) ;
+            map.put("endDate", endDate) ;
+            categoryOverviewList = categoryOverviewXMapper.selectAllSum(map) ;
         }
-
-        List<CategoryOverview> categoryOverviewList =
-                categoryOverviewMapper.selectByExample(categoryOverviewExample);
-
         return categoryOverviewList;
     }
 }
