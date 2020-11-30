@@ -2,14 +2,16 @@ package com.fengchao.statistics.dao;
 
 import com.fengchao.statistics.constants.IStatusEnum;
 import com.fengchao.statistics.constants.StatisticPeriodTypeEnum;
+import com.fengchao.statistics.mapper.BaiduStatisMapper;
 import com.fengchao.statistics.mapper.CategoryOverviewMapper;
-import com.fengchao.statistics.mapper.CategoryOverviewXMapper;
 import com.fengchao.statistics.model.CategoryOverview;
 import com.fengchao.statistics.model.CategoryOverviewExample;
+import com.fengchao.statistics.model.CategoryOverviewX;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -22,12 +24,12 @@ import java.util.List;
 public class CategoryOverviewDao {
 
     private CategoryOverviewMapper categoryOverviewMapper;
-    private CategoryOverviewXMapper categoryOverviewXMapper ;
+    private BaiduStatisMapper baiduStatisMapper ;
 
     @Autowired
-    public CategoryOverviewDao(CategoryOverviewMapper categoryOverviewMapper, CategoryOverviewXMapper categoryOverviewXMapper) {
+    public CategoryOverviewDao(CategoryOverviewMapper categoryOverviewMapper, BaiduStatisMapper baiduStatisMapper) {
         this.categoryOverviewMapper = categoryOverviewMapper;
-        this.categoryOverviewXMapper = categoryOverviewXMapper;
+        this.baiduStatisMapper = baiduStatisMapper;
     }
 
     /**
@@ -78,7 +80,7 @@ public class CategoryOverviewDao {
 
         criteria.andPeriodTypeEqualTo(StatisticPeriodTypeEnum.DAY.getValue().shortValue());
         criteria.andStatisticStartTimeBetween(startDate, endDate);
-        List<CategoryOverview> categoryOverviewList = null;
+        List<CategoryOverview> categoryOverviewList = new ArrayList<>();
         if (StringUtils.isNotBlank(renterId) && !"0".equals(renterId)) {
             criteria.andRenterIdEqualTo(renterId);
             categoryOverviewList =
@@ -87,7 +89,14 @@ public class CategoryOverviewDao {
             HashMap map = new HashMap();
             map.put("startDate", startDate) ;
             map.put("endDate", endDate) ;
-            categoryOverviewList = categoryOverviewXMapper.selectAllSum(map) ;
+            List<HashMap<String, Object>> categoryOverviewXList = baiduStatisMapper.selectAllSum(map) ;
+            for (HashMap<String, Object> hashMap: categoryOverviewXList) {
+                CategoryOverview categoryOverview = new CategoryOverview() ;
+                categoryOverview.setOrderAmount(Long.valueOf((String) hashMap.get("orderAmount")));
+                categoryOverview.setCategoryFcode((String) hashMap.get("categoryFcode"));
+                categoryOverview.setCategoryFname((String) hashMap.get("categoryFname"));
+                categoryOverviewList.add(categoryOverview) ;
+            }
         }
         return categoryOverviewList;
     }

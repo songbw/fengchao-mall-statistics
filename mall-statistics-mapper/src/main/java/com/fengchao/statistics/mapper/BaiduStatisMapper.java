@@ -1,5 +1,6 @@
 package com.fengchao.statistics.mapper;
 
+import com.fengchao.statistics.model.CategoryOverviewX;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
@@ -23,4 +24,6 @@ public interface BaiduStatisMapper {
     Integer countStatisticsData(HashMap map);
 
     Integer countDetailData(HashMap map);
+
+    List<HashMap<String, Object>> selectAllSum(HashMap map) ;
 }

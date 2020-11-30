@@ -62,5 +62,11 @@
     and  `key` = #{urlKey}
     and <![CDATA[visit_date >= #{dayStart,jdbcType=DATE}]]> <![CDATA[ and visit_date <= #{dayEnd,jdbcType=DATE}]]>
   </select>
+  <select id="selectAllSum" resultType="java.util.HashMap" parameterType="Map">
+    select sum(order_amount) orderAmount, category_fcode categoryFcode, category_fname categoryFname
+    FROM category_overview
+    where <![CDATA[statistic_start_time between #{startDate} and #{endDate}]]> and istatus = 1 and period_type = 1
+    GROUP BY category_fcode
+  </select>
 
 </mapper>
