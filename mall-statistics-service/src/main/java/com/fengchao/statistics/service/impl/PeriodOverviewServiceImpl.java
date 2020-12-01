@@ -162,13 +162,13 @@ public class PeriodOverviewServiceImpl implements PeriodOverviewService {
     }
 
     @Override
-    public List<PeriodOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate) throws Exception {
+    public List<PeriodOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate, String renterId) throws Exception {
         // 1. 查询数据库
         Date _startDate = DateUtil.parseDateTime(startDate + " 00:00:00", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         Date _endDate = DateUtil.parseDateTime(endDate + " 23:59:59", DateUtil.DATE_YYYY_MM_DD_HH_MM_SS);
         log.info("根据时间范围获取daily型的时间段维度统计数据 日期范围: {} - {}", _startDate, _endDate);
         List<PeriodOverview> periodOverviewList =
-                periodOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate);
+                periodOverviewDao.selectDailyStatisticByDateRange(_startDate, _endDate, renterId);
         log.info("根据时间范围获取daily型的时间段维度统计数据 数据库返回: {}", JSONUtil.toJsonString(periodOverviewList));
 
         if (CollectionUtils.isEmpty(periodOverviewList)) {

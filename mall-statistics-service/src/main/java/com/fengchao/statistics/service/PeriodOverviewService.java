@@ -24,8 +24,9 @@ public interface PeriodOverviewService {
      *
      * @param startDate
      * @param endDate
+     * @param renterId
      * @return
      * @throws Exception
      */
-    List<PeriodOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate) throws Exception;
+    List<PeriodOverviewResVo> fetchStatisticDailyResult(String startDate, String endDate, String renterId) throws Exception;
 }

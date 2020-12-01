@@ -68,5 +68,9 @@
     where <![CDATA[statistic_start_time between #{startDate} and #{endDate}]]> and istatus = 1 and period_type = 1
     GROUP BY category_fcode
   </select>
-
+  <select id="selectPeriodSum" resultType="java.util.HashMap" parameterType="Map">
+    select sum(late_at_night) lateAtNight, sum(early_morning) earlyMorning, sum(morning) morning,sum(noon) noon,sum(afternoon) afternoon,sum(night) night
+    FROM period_overview
+    where <![CDATA[statistic_start_time between #{startDate} and #{endDate}]]> and istatus = 1 and period_type = 1
+  </select>
 </mapper>

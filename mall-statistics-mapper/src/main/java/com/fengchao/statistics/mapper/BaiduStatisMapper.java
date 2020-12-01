@@ -26,4 +26,6 @@ public interface BaiduStatisMapper {
     Integer countDetailData(HashMap map);
 
     List<HashMap<String, Object>> selectAllSum(HashMap map) ;
+
+    List<HashMap<String, Object>> selectPeriodSum(HashMap map) ;
 }

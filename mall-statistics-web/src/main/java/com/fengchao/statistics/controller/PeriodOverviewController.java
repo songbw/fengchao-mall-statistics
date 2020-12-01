@@ -8,6 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,12 +27,12 @@ public class PeriodOverviewController {
     private PeriodOverviewService periodOverviewService;
 
     @GetMapping("list")
-    private OperaResponse overview(String startDate, String endDate, OperaResponse operaResponse) {
+    private OperaResponse overview(@RequestHeader("renter") String renterHeader, String startDate, String endDate, OperaResponse operaResponse) {
         log.info("根据时间范围获取按照时间段维度的统计结果, 入参 startDate:{}, endDate:{}", startDate, endDate);
 
         try {
             List<PeriodOverviewResVo> periodOverviewResVoList =
-                    periodOverviewService.fetchStatisticDailyResult(startDate, endDate);
+                    periodOverviewService.fetchStatisticDailyResult(startDate, endDate, renterHeader);
             operaResponse.setData(periodOverviewResVoList);
         } catch (Exception e) {
             log.info("根据时间范围获取按照时间段类维度的统计结果 异常:{}", e.getMessage(), e);
