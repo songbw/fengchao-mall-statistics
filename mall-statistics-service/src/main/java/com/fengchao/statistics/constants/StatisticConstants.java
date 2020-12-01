@@ -55,4 +55,9 @@ public class StatisticConstants {
      * 商户维度，用户数趋势
      */
     public static final String M_USER_TREND = "m_user_trend";
+
+    /**
+     * 商户维度，用户数趋势
+     */
+    public static final String APP_ID = "app_id";
 }

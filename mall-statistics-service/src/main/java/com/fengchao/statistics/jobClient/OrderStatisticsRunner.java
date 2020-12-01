@@ -84,6 +84,7 @@ public class OrderStatisticsRunner implements  JobRunner {
                     BeanContext.getApplicationContext().getBean(OrdersRpcService.class);
             MerchantStatisticService merchantStatisticService =
                     BeanContext.getApplicationContext().getBean(MerchantStatisticService.class);
+            AppOverviewService appOverviewService = BeanContext.getApplicationContext().getBean(AppOverviewService.class) ;
 
             // 3. 统计
             // 3.1 调用order rpc服务，根据时间范围查询已支付的订单详情
@@ -123,6 +124,11 @@ public class OrderStatisticsRunner implements  JobRunner {
             // f.商户维度，用户数趋势
             if (needExecuteTaskList.contains(StatisticConstants.M_USER_TREND) && CollectionUtils.isNotEmpty(payedOrderDetailBeanList)) {
                 merchantStatisticService.statisticDailyUserCount(payedOrderDetailBeanList, startDateTime, endDateTime, statisticDate);
+            }
+
+            // f.appId维度，订单总额
+            if (needExecuteTaskList.contains(StatisticConstants.APP_ID) && CollectionUtils.isNotEmpty(payedOrderDetailBeanList)) {
+                appOverviewService.doDailyStatistic(payedOrderDetailBeanList, startDateTime, endDateTime, statisticDate);
             }
 
             stopWatch.stop();

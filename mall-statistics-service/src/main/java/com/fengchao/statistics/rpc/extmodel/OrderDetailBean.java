@@ -80,4 +80,5 @@ public class OrderDetailBean {
      * 品类
      */
     private String category;
+    private String appId ;
 }
