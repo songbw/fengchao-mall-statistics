@@ -96,7 +96,7 @@ public class PeriodOverviewDao {
             map.put("endDate", endDate) ;
             List<HashMap<String, Object>> categoryOverviewXList = baiduStatisMapper.selectPeriodSum(map) ;
             log.info("baiduStatisMapper.selectPeriodSum is {}", JSONUtil.toJsonString(categoryOverviewXList));
-            if (categoryOverviewXList != null && categoryOverviewXList.size() > 0) {
+            if (categoryOverviewXList != null && categoryOverviewXList.size() > 0 && categoryOverviewXList.get(0) != null) {
                 for (HashMap<String, Object> hashMap: categoryOverviewXList) {
                     PeriodOverview overview = new PeriodOverview() ;
                     overview.setLateAtNight(Long.valueOf((String) hashMap.get("lateAtNight")));
