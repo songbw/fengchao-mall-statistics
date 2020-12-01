@@ -96,16 +96,19 @@ public class PeriodOverviewDao {
             map.put("endDate", endDate) ;
             List<HashMap<String, Object>> categoryOverviewXList = baiduStatisMapper.selectPeriodSum(map) ;
             log.info("baiduStatisMapper.selectPeriodSum is {}", JSONUtil.toJsonString(categoryOverviewXList));
-            for (HashMap<String, Object> hashMap: categoryOverviewXList) {
-                PeriodOverview overview = new PeriodOverview() ;
-                overview.setLateAtNight(Long.valueOf((String) hashMap.get("lateAtNight")));
-                overview.setEarlyMorning(Long.valueOf((String) hashMap.get("earlyMorning")));
-                overview.setMorning(Long.valueOf((String) hashMap.get("morning")));
-                overview.setNoon(Long.valueOf((String) hashMap.get("noon")));
-                overview.setAfternoon(Long.valueOf((String) hashMap.get("afternoon")));
-                overview.setNight(Long.valueOf((String) hashMap.get("night")));
-                periodOverviewList.add(overview) ;
+            if (categoryOverviewXList != null && categoryOverviewXList.size() > 0) {
+                for (HashMap<String, Object> hashMap: categoryOverviewXList) {
+                    PeriodOverview overview = new PeriodOverview() ;
+                    overview.setLateAtNight(Long.valueOf((String) hashMap.get("lateAtNight")));
+                    overview.setEarlyMorning(Long.valueOf((String) hashMap.get("earlyMorning")));
+                    overview.setMorning(Long.valueOf((String) hashMap.get("morning")));
+                    overview.setNoon(Long.valueOf((String) hashMap.get("noon")));
+                    overview.setAfternoon(Long.valueOf((String) hashMap.get("afternoon")));
+                    overview.setNight(Long.valueOf((String) hashMap.get("night")));
+                    periodOverviewList.add(overview) ;
+                }
             }
+
         }
 
         return periodOverviewList;

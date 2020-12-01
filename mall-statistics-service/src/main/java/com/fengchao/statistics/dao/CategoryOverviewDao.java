@@ -90,12 +90,14 @@ public class CategoryOverviewDao {
             map.put("startDate", startDate) ;
             map.put("endDate", endDate) ;
             List<HashMap<String, Object>> categoryOverviewXList = baiduStatisMapper.selectAllSum(map) ;
-            for (HashMap<String, Object> hashMap: categoryOverviewXList) {
-                CategoryOverview categoryOverview = new CategoryOverview() ;
-                categoryOverview.setOrderAmount(Long.valueOf((String) hashMap.get("orderAmount")));
-                categoryOverview.setCategoryFcode((String) hashMap.get("categoryFcode"));
-                categoryOverview.setCategoryFname((String) hashMap.get("categoryFname"));
-                categoryOverviewList.add(categoryOverview) ;
+            if (categoryOverviewXList != null && categoryOverviewXList.size() > 0) {
+                for (HashMap<String, Object> hashMap: categoryOverviewXList) {
+                    CategoryOverview categoryOverview = new CategoryOverview() ;
+                    categoryOverview.setOrderAmount(Long.valueOf((String) hashMap.get("orderAmount")));
+                    categoryOverview.setCategoryFcode((String) hashMap.get("categoryFcode"));
+                    categoryOverview.setCategoryFname((String) hashMap.get("categoryFname"));
+                    categoryOverviewList.add(categoryOverview) ;
+                }
             }
         }
         return categoryOverviewList;
