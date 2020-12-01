@@ -7,6 +7,8 @@ import com.fengchao.statistics.mapper.PeriodOverviewMapper;
 import com.fengchao.statistics.model.CategoryOverview;
 import com.fengchao.statistics.model.PeriodOverview;
 import com.fengchao.statistics.model.PeriodOverviewExample;
+import com.fengchao.statistics.utils.JSONUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ import java.util.List;
  * @Author tom
  * @Date 19-7-25 下午5:17
  */
+@Slf4j
 @Component
 public class PeriodOverviewDao {
 
@@ -92,6 +95,7 @@ public class PeriodOverviewDao {
             map.put("startDate", startDate) ;
             map.put("endDate", endDate) ;
             List<HashMap<String, Object>> categoryOverviewXList = baiduStatisMapper.selectPeriodSum(map) ;
+            log.debug("baiduStatisMapper.selectPeriodSum is {}", JSONUtil.toJsonString(categoryOverviewXList));
             for (HashMap<String, Object> hashMap: categoryOverviewXList) {
                 PeriodOverview overview = new PeriodOverview() ;
                 overview.setLateAtNight(Long.valueOf((String) hashMap.get("lateAtNight")));
