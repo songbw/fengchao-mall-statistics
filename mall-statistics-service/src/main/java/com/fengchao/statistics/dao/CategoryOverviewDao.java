@@ -90,7 +90,7 @@ public class CategoryOverviewDao {
             map.put("startDate", startDate) ;
             map.put("endDate", endDate) ;
             List<HashMap<String, Object>> categoryOverviewXList = baiduStatisMapper.selectAllSum(map) ;
-            if (categoryOverviewXList != null && categoryOverviewXList.size() > 0) {
+            if (categoryOverviewXList != null && categoryOverviewXList.size() > 0 && categoryOverviewXList.get(0) != null) {
                 for (HashMap<String, Object> hashMap: categoryOverviewXList) {
                     CategoryOverview categoryOverview = new CategoryOverview() ;
                     categoryOverview.setOrderAmount(Long.valueOf((String) hashMap.get("orderAmount")));
