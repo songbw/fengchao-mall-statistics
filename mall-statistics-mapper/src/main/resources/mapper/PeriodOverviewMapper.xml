@@ -16,6 +16,7 @@
     <result column="istatus" jdbcType="SMALLINT" property="istatus" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="renter_id" jdbcType="VARCHAR" property="renterId" />
   </resultMap>
   <sql id="Example_Where_Clause">
     <where>
@@ -77,7 +78,8 @@
   </sql>
   <sql id="Base_Column_List">
     id, late_at_night, early_morning, morning, noon, afternoon, night, statistics_date, 
-    statistic_start_time, statistic_end_time, period_type, istatus, create_time, update_time
+    statistic_start_time, statistic_end_time, period_type, istatus, create_time, update_time, 
+    renter_id
   </sql>
   <select id="selectByExample" parameterType="com.fengchao.statistics.model.PeriodOverviewExample" resultMap="BaseResultMap">
     select
@@ -114,12 +116,12 @@
       noon, afternoon, night, 
       statistics_date, statistic_start_time, statistic_end_time, 
       period_type, istatus, create_time, 
-      update_time)
+      update_time, renter_id)
     values (#{lateAtNight,jdbcType=BIGINT}, #{earlyMorning,jdbcType=BIGINT}, #{morning,jdbcType=BIGINT}, 
       #{noon,jdbcType=BIGINT}, #{afternoon,jdbcType=BIGINT}, #{night,jdbcType=BIGINT}, 
       #{statisticsDate,jdbcType=DATE}, #{statisticStartTime,jdbcType=TIMESTAMP}, #{statisticEndTime,jdbcType=TIMESTAMP}, 
       #{periodType,jdbcType=SMALLINT}, #{istatus,jdbcType=SMALLINT}, #{createTime,jdbcType=TIMESTAMP}, 
-      #{updateTime,jdbcType=TIMESTAMP})
+      #{updateTime,jdbcType=TIMESTAMP}, #{renterId,jdbcType=VARCHAR})
   </insert>
   <insert id="insertSelective" keyColumn="id" keyProperty="id" parameterType="com.fengchao.statistics.model.PeriodOverview" useGeneratedKeys="true">
     insert into period_overview
@@ -163,6 +165,9 @@
       <if test="updateTime != null">
         update_time,
       </if>
+      <if test="renterId != null">
+        renter_id,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="lateAtNight != null">
@@ -203,6 +208,9 @@
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="renterId != null">
+        #{renterId,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
@@ -257,6 +265,9 @@
       <if test="record.updateTime != null">
         update_time = #{record.updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="record.renterId != null">
+        renter_id = #{record.renterId,jdbcType=VARCHAR},
+      </if>
     </set>
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
@@ -277,7 +288,8 @@
       period_type = #{record.periodType,jdbcType=SMALLINT},
       istatus = #{record.istatus,jdbcType=SMALLINT},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
-      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      renter_id = #{record.renterId,jdbcType=VARCHAR}
     <if test="_parameter != null">
       <include refid="Update_By_Example_Where_Clause" />
     </if>
@@ -324,6 +336,9 @@
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="renterId != null">
+        renter_id = #{renterId,jdbcType=VARCHAR},
+      </if>
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
@@ -341,7 +356,8 @@
       period_type = #{periodType,jdbcType=SMALLINT},
       istatus = #{istatus,jdbcType=SMALLINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP}
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      renter_id = #{renterId,jdbcType=VARCHAR}
     where id = #{id,jdbcType=BIGINT}
   </update>
 </mapper>

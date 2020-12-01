@@ -31,6 +31,8 @@ public class PeriodOverview {
 
     private Date updateTime;
 
+    private String renterId;
+
     public Long getId() {
         return id;
     }
@@ -141,5 +143,13 @@ public class PeriodOverview {
 
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
+    }
+
+    public String getRenterId() {
+        return renterId;
+    }
+
+    public void setRenterId(String renterId) {
+        this.renterId = renterId == null ? null : renterId.trim();
     }
 }

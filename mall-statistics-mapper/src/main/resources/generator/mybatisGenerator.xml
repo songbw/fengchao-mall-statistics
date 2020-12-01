@@ -35,7 +35,7 @@
 <!--        <table tableName="m_statistic_user">-->
 <!--            <generatedKey column="id" sqlStatement="JDBC" />-->
 <!--        </table>-->
-        <table tableName="category_overview">
+        <table tableName="period_overview">
             <generatedKey column="id" sqlStatement="JDBC" />
         </table>
     </context>

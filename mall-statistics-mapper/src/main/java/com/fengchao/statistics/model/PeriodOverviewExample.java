@@ -971,6 +971,76 @@ public class PeriodOverviewExample {
             addCriterion("update_time not between", value1, value2, "updateTime");
             return (Criteria) this;
         }
+
+        public Criteria andRenterIdIsNull() {
+            addCriterion("renter_id is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdIsNotNull() {
+            addCriterion("renter_id is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdEqualTo(String value) {
+            addCriterion("renter_id =", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdNotEqualTo(String value) {
+            addCriterion("renter_id <>", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdGreaterThan(String value) {
+            addCriterion("renter_id >", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdGreaterThanOrEqualTo(String value) {
+            addCriterion("renter_id >=", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdLessThan(String value) {
+            addCriterion("renter_id <", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdLessThanOrEqualTo(String value) {
+            addCriterion("renter_id <=", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdLike(String value) {
+            addCriterion("renter_id like", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdNotLike(String value) {
+            addCriterion("renter_id not like", value, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdIn(List<String> values) {
+            addCriterion("renter_id in", values, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdNotIn(List<String> values) {
+            addCriterion("renter_id not in", values, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdBetween(String value1, String value2) {
+            addCriterion("renter_id between", value1, value2, "renterId");
+            return (Criteria) this;
+        }
+
+        public Criteria andRenterIdNotBetween(String value1, String value2) {
+            addCriterion("renter_id not between", value1, value2, "renterId");
+            return (Criteria) this;
+        }
     }
 
     public static class Criteria extends GeneratedCriteria {
