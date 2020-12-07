@@ -2,10 +2,7 @@ package com.fengchao.statistics.controller;
 
 import com.fengchao.statistics.bean.OperaResponse;
 import com.fengchao.statistics.bean.vo.AppOverviewResVo;
-import com.fengchao.statistics.bean.vo.CategoryOverviewResVo;
-import com.fengchao.statistics.bean.vo.OverviewResVo;
 import com.fengchao.statistics.service.AppOverviewService;
-import com.fengchao.statistics.service.CategoryOverviewService;
 import com.fengchao.statistics.utils.JSONUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +20,7 @@ import java.util.List;
  * @author zp
  */
 @RestController
-@RequestMapping(value = "/overview/ap", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
+@RequestMapping(value = "/overview/app", produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
 @Slf4j
 public class AppOverviewController {
 
